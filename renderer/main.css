@@ -3,3 +3,8 @@
   color: lightgray;
   font-style: italic;
 }
+
+#error {
+  padding: 1rem;
+  color: red;
+}

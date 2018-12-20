@@ -1,8 +1,11 @@
+const validator = require('validator');
+
 let addModalOpenButton = document.querySelector('.open-add-modal');
 let addModalCloseButton = document.querySelector('.close-add-modal');
 let addModal = document.querySelector('#add-modal');
 let addButton = document.querySelector('#add-button');
 let itemInput = document.querySelector('#item-input');
+let error = document.querySelector('#error');
 
 addModalOpenButton.addEventListener('click', (e) => {
   e.preventDefault();
@@ -18,8 +21,11 @@ addButton.addEventListener('click', (e) => {
   e.preventDefault();
   let newItemURL = itemInput.value;
 
-  if (isValidURL(newItemURL)) {
+  if (validator.isURL(newItemURL)) {
+    error.innerHTML = "";
     console.log(newItemURL)
+  } else {
+    error.innerHTML = "Please enter a valid URL.";
   }
 });
 
