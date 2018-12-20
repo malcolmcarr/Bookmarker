@@ -18,12 +18,12 @@ addButton.addEventListener('click', (e) => {
   e.preventDefault();
   let newItemURL = itemInput.value;
 
-  if (newItemURL) {
-    let x;
+  if (isValidURL(newItemURL)) {
+    console.log(newItemURL)
   }
 });
 
-function checkValidURL(str) {
+function isValidURL(str) {
   const VALID_URL_REGEX = /(https?:\/\/)?(www\.)?([a-zA-Z0-9-@]+\.)*\.[a-z]{2,3}/;
   
   const valid = VALID_URL_REGEX.exec(str);
