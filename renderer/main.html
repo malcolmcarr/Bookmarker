@@ -15,10 +15,8 @@
       <div class="panel-heading">
         <div class="control is-grouped">
           <p class="control">
-            <a class="button is-primary">
-              <span class="icon is-small">
-                <i class="fa fa-plus"></i>
-              </span>
+            <a class="button is-primary open-add-modal">
+              <span class="icon is-small"> <i class="fa fa-plus"></i> </span>
             </a>
           </p>
           <p class="control is-expanded has-icon has-icon-right">
@@ -33,8 +31,33 @@
       <div id="read-list" class="empty">
         <p id="no-items" class="has-text-centered">No Items</p>
       </div>
-
     </div>
+
+    <div class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+
+        <p class="control is-expanded has-icon has-icon-right">
+          <input type="text" class="input" id="item-input" /><span
+            class="icon is-small"
+            ><i class="fa fa-globe"></i
+          ></span>
+        </p>
+        <div class="control is-grouped">
+            <p class="control">
+              <a class="button is-primary" id="add-button">
+                <span class="icon is-small"> <i class="fa fa-plus"></i> </span>
+                <span><strong>Add Item</strong></span>
+              </a>
+            </p>
+            <p class="control is-expanded has-icon has-icon-right">
+              <a class="button close-add-modal"></a>
+            </p>
+          </div>
+      </div>
+      <button class="modal-close is-large" aria-label="close">Cancel</button>
+    </div>
+
     <script>
       require('./app');
     </script>
