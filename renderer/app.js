@@ -1,4 +1,6 @@
+const { ipcRenderer } = require('electron');
 const validator = require('validator');
+
 
 let addModalOpenButton = document.querySelector('.open-add-modal');
 let addModalCloseButton = document.querySelector('.close-add-modal');
@@ -17,22 +19,21 @@ addModalCloseButton.addEventListener('click', (e) => {
   addModal.classList.remove('is-active');
 });
 
-addButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  let newItemURL = itemInput.value;
+addButton.addEventListener('click', submitItem);
 
-  if (validator.isURL(newItemURL)) {
-    error.innerHTML = "";
-    console.log(newItemURL)
-  } else {
-    error.innerHTML = "Please enter a valid URL.";
+document.addEventListener('keypress', (e) => {
+  if (e.code === 'Enter' && addModal.classList.contains('is-active')) {
+    submitItem();
   }
 });
 
-function isValidURL(str) {
-  const VALID_URL_REGEX = /(https?:\/\/)?(www\.)?([a-zA-Z0-9-@]+\.)*\.[a-z]{2,3}/;
+function submitItem() {
+    let newItemURL = itemInput.value;
   
-  const valid = VALID_URL_REGEX.exec(str);
-
-  return valid ? true : false;
+    if (validator.isURL(newItemURL)) {
+      error.innerHTML = "";
+      ipcRenderer.send('newItem', newItemURL);
+    } else {
+      error.innerHTML = "Please enter a valid URL.";
+    }
 }
