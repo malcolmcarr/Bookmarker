@@ -4,7 +4,14 @@
   font-style: italic;
 }
 
-#error {
+.message {
   padding: 1rem;
+}
+
+.error {
   color: red;
+}
+
+.success {
+  color: green;
 }

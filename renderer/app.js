@@ -7,7 +7,7 @@ let addModalCloseButton = document.querySelector('.close-add-modal');
 let addModal = document.querySelector('#add-modal');
 let addButton = document.querySelector('#add-button');
 let itemInput = document.querySelector('#item-input');
-let error = document.querySelector('#error');
+let message = document.querySelector('#message');
 
 addModalOpenButton.addEventListener('click', (e) => {
   e.preventDefault();
@@ -27,13 +27,31 @@ document.addEventListener('keypress', (e) => {
   }
 });
 
+ipcRenderer.on('newItemSuccess', (e, item) => {
+  itemInput.disabled = false;
+  addModalCloseButton.disabled = false;
+  itemInput.value = '';
+  message.classList.add('success');
+  message.innerHTML = 'Success';
+  addButton.classList.remove('is-loading');
+  addModal.classList.remove('is-active');
+});
+
 function submitItem() {
     let newItemURL = itemInput.value;
   
     if (validator.isURL(newItemURL)) {
-      error.innerHTML = "";
+
+      itemInput.disabled = true;
+      addModalCloseButton.disabled = true;
+      addButton.classList.add('is-loading');
+      message.classList.remove('error');
+      message.innerHTML = '';
+
       ipcRenderer.send('newItem', newItemURL);
     } else {
-      error.innerHTML = "Please enter a valid URL.";
+      message.classList.remove('success');
+      message.classList.remove('error');
+      message.innerHTML = "Please enter a valid URL.";
     }
 }
