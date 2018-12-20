@@ -42,6 +42,12 @@ function submitItem() {
   
     if (validator.isURL(newItemURL)) {
 
+      // Add protocol if input does not contain
+      if (!newItemURL.startsWith('http')) {
+        newItemURL = `http://${newItemURL}`;
+        console.log(newItemURL);
+      }
+
       itemInput.disabled = true;
       addModalCloseButton.disabled = true;
       addButton.classList.add('is-loading');
