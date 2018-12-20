@@ -1,20 +1,8 @@
-const electron = require('electron');
+const { app } = require('electron');
+const mainWindow = require('./mainWindow');
 
-// Live reload
-// require('electron-reload')(__dirname);
-const { app, BrowserWindow } = electron;
+require('electron-reload')(__dirname);
 
-let mainWindow;
-
-const createWindow = () => {
-  mainWindow = new BrowserWindow({ width: 800, height: 600 });
-  mainWindow.loadFile('./renderer/index.html');
-
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
-}
-
-app.on('ready', createWindow);
+app.on('ready', mainWindow.create);
 app.on('window-all-closed', app.quit);
 app.on('activate', () => mainWindow ? null : createWindow());
