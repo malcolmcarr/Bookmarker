@@ -10,9 +10,9 @@ const pushItem = (item) => {
 };
 
 const addItemToList = (item) => {
-  const { screenshot, title } = item;
+  const { screenshot, title, url } = item;
   document.querySelector('#no-items').style.display = 'none';
-  constructReadItem(screenshot, title);
+  constructReadItem(screenshot, title, url);
 };
 
 const getItems = () => {
@@ -34,13 +34,28 @@ const changeItem = (direction) => {
   if (selection && selection.classList.contains('read-item')) {
     active.classList.remove('is-active');
     selection.classList.add('is-active');
+    openItem();
   }
 };
 
-const constructReadItem = (screenshot, title) => {
+const openItem = () => {
+  if (!getItems().length) return;
+
+  let target = document.querySelector('.read-item.is-active');
+  let itemURL = encodeURIComponent(target.getAttribute('data-url'));
+  let itemTitle = target.getAttribute('data-title');
+
+  let readerWindowURL = `file://${__dirname}/reader.html?url=${itemURL}`;
+
+  let readerWindow = window.open(readerWindowURL, itemTitle);
+}
+
+const constructReadItem = (screenshot, title, url) => {
   let readList = document.querySelector('#read-list');
   let anchor = document.createElement('a');
   anchor.classList.add('panel-block', 'read-item');
+  anchor.setAttribute('data-url', url);
+  anchor.setAttribute('data-title', title);
   let figure = document.createElement('figure');
   figure.classList.add('image', 'has-shadow', 'is-64x64', 'thumb');
   let image = document.createElement('img');
@@ -57,8 +72,8 @@ const constructReadItem = (screenshot, title) => {
   let readItems = document.querySelectorAll('.read-item');
 
   for (item of readItems) {
-    console.log(item);
     item.addEventListener('click', selectItem);
+    item.addEventListener('dblclick', openItem);
   }
   
 };

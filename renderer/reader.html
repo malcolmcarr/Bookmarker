@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="../node_modules/bulma/css/bulma.css" />
+    <link
+      rel="stylesheet"
+      href="../node_modules/font-awesome/css/font-awesome.css"
+    />
+    <link rel="stylesheet" href="main.css" />
+  <style media="screen">
+    html, body, webview {
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <div id="loader" class="hero is-fullheight has-text-centered">
+      <div class="hero-body">
+        <div class="container">
+          <div class="busy">
+            <h1 class="title"><span class="icon is-large"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span></h1>
+          </div>
+          <div class="failed is-hidden">
+              <h1 class="title">Failed to load</h1>
+              <h2 class="subtitle">Please check your connection. The site may be down.</h2>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <webview src="about:blank"></webview>
+  <script>
+    const queryString = require('query-string');
+    const queryParams = queryString.parse(location.search);
+
+    let url = decodeURIComponent(queryParams.url);
+
+    document.querySelector('webview').addEventListener('dom-ready', (e) => {
+      if (e.currentTarget.getAttribute('data-dom-triggered')) return;
+      e.currentTarget.setAttribute('data-dom-triggered', true);
+      e.currentTarget.loadURL(url);
+    });
+
+    document.querySelector('webview').addEventListener('did-finish-load', (e) => {
+      if (e.currentTarget.getAttribute('data-load-triggered')) return;
+      e.currentTarget.setAttribute('data-load-triggered', true);
+      document.querySelector('#loader').classList.add('is-hidden');
+    });
+
+    document.querySelector('webview').addEventListener('did-fail-load', (e) => {
+      document.querySelector('#loader .busy').classList.add('is-hidden');
+      document.querySelector('#loader .failed').classList.remove('is-hidden');
+
+    });
+    
+    </script>
+</body>
+</html>
