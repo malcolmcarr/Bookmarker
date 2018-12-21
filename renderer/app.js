@@ -41,8 +41,8 @@ ipcRenderer.on('newItemSuccess', (e, item) => {
 });
 
 if (items.getItems()) {
-  for (let item in items.getItems()) {
-    items.addItemToList(item)
+  for (let item of items.getItems()) {
+    items.addItemToList(item);
   }
 }
 

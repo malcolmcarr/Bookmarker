@@ -15,7 +15,7 @@ let bgWindow;
     });
 
   bgWindow.loadURL(url);
-  bgWindow.webContents.on('did-finish-load', () => {
+  bgWindow.webContents.on('dom-ready', () => {
     
     bgWindow.webContents.capturePage((image) => {
       let screenshot = image.toDataURL();
