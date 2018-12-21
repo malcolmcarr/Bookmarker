@@ -19,6 +19,14 @@ const getItems = () => {
   return toReadItems.length ? toReadItems : null;
 };
 
+const selectItem = (e) => {
+  let readItems = document.querySelectorAll('.read-item');
+  for (item of readItems) {
+    item.classList.remove('is-active');
+  }
+  e.currentTarget.classList.add('is-active');
+}
+
 const constructReadItem = (screenshot, title) => {
   let readList = document.querySelector('#read-list');
   let anchor = document.createElement('a');
@@ -30,11 +38,19 @@ const constructReadItem = (screenshot, title) => {
   let h2 = document.createElement('h2');
   h2.classList.add('title', 'is-4', 'column');
   h2.innerText = title;
-
+  
   anchor.appendChild(figure);
   anchor.appendChild(h2);
   figure.appendChild(image);
   readList.appendChild(anchor);
+  
+  let readItems = document.querySelectorAll('.read-item');
+  
+  for (item of readItems) {
+    console.log(item);
+    item.addEventListener('click', selectItem);
+  }
+  
 };
 
 module.exports = {

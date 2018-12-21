@@ -30,7 +30,7 @@ searchBar.addEventListener('keyup', () => {
 
   for (let title of titles) {
     console.log(title.innerText.toLowerCase());
-    title.innerText.toLowerCase().includes(query) ? title.parentElement.style.display = 'block' : 
+    title.innerText.toLowerCase().includes(query) ? title.parentElement.style.display = '' : 
     title.parentElement.style.display = 'none';
   }
 });
@@ -56,6 +56,7 @@ if (items.getItems()) {
   for (let item of items.getItems()) {
     items.addItemToList(item);
   }
+  document.querySelector('.read-item').classList.add('is-active');
 }
 
 function submitItem() {

@@ -4,6 +4,14 @@
   font-style: italic;
 }
 
+.read-item {
+  border-left-width: 10px;
+}
+
+.read-item.is-active {
+  background-color: #FAFAFA;
+}
+
 .panel {
   padding-top: 52px;
   margin-bottom: 0 !important;
