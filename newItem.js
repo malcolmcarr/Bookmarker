@@ -23,7 +23,7 @@ let bgWindow;
 
       bgWindow.close();
       bgWindow = null;
-      resolve({ title, screenshot })
+      resolve({ title, screenshot, url })
     });
   });
 

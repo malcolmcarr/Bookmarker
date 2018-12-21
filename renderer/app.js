@@ -1,6 +1,8 @@
 const { ipcRenderer } = require('electron');
 const validator = require('validator');
 
+const items = require('./items');
+
 
 let addModalOpenButton = document.querySelector('.open-add-modal');
 let addModalCloseButton = document.querySelector('.close-add-modal');
@@ -31,11 +33,18 @@ ipcRenderer.on('newItemSuccess', (e, item) => {
   itemInput.disabled = false;
   addModalCloseButton.disabled = false;
   itemInput.value = '';
-  message.classList.add('success');
-  message.innerHTML = 'Success';
   addButton.classList.remove('is-loading');
   addModal.classList.remove('is-active');
+  
+  items.pushItem(item);
+  items.addItemToList(item);
 });
+
+if (items.getItems()) {
+  for (let item in items.getItems()) {
+    items.addItemToList(item)
+  }
+}
 
 function submitItem() {
     let newItemURL = itemInput.value;
@@ -45,7 +54,6 @@ function submitItem() {
       // Add protocol if input does not contain
       if (!newItemURL.startsWith('http')) {
         newItemURL = `http://${newItemURL}`;
-        console.log(newItemURL);
       }
 
       itemInput.disabled = true;
@@ -56,8 +64,7 @@ function submitItem() {
 
       ipcRenderer.send('newItem', newItemURL);
     } else {
-      message.classList.remove('success');
-      message.classList.remove('error');
+      message.classList.add('error');
       message.innerHTML = "Please enter a valid URL.";
     }
 }

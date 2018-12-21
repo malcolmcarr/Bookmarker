@@ -4,14 +4,22 @@
   font-style: italic;
 }
 
+.panel {
+  padding-top: 52px;
+  margin-bottom: 0 !important;
+}
+
+.panel-heading {
+  position: fixed;
+  width: 100%;
+  margin-top: -52px;
+  z-index: 9999;
+}
+
 .message {
   padding: 1rem;
 }
 
 .error {
   color: red;
-}
-
-.success {
-  color: green;
 }
