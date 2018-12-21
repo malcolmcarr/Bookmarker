@@ -10,6 +10,7 @@ let addModal = document.querySelector('#add-modal');
 let addButton = document.querySelector('#add-button');
 let itemInput = document.querySelector('#item-input');
 let message = document.querySelector('#message');
+let searchBar = document.querySelector('#search');
 
 addModalOpenButton.addEventListener('click', (e) => {
   e.preventDefault();
@@ -22,6 +23,17 @@ addModalCloseButton.addEventListener('click', (e) => {
 });
 
 addButton.addEventListener('click', submitItem);
+
+searchBar.addEventListener('keyup', () => {
+  const query = searchBar.value.toLowerCase();
+  let titles = document.querySelectorAll('.read-item > h2');
+
+  for (let title of titles) {
+    console.log(title.innerText.toLowerCase());
+    title.innerText.toLowerCase().includes(query) ? title.parentElement.style.display = 'block' : 
+    title.parentElement.style.display = 'none';
+  }
+});
 
 document.addEventListener('keypress', (e) => {
   if (e.code === 'Enter' && addModal.classList.contains('is-active')) {
