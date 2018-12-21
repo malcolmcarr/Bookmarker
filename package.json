@@ -7,8 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "./node_modules/.bin/electron ."
   },
-  "keywords": [],
-  "author": "",
+  "author": "Malcolm Carr",
   "license": "ISC",
   "devDependencies": {
     "electron": "^3.0.13",
