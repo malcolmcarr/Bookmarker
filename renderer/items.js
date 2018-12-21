@@ -25,7 +25,17 @@ const selectItem = (e) => {
     item.classList.remove('is-active');
   }
   e.currentTarget.classList.add('is-active');
-}
+};
+
+const changeItem = (direction) => {
+  let active = document.querySelector('.read-item.is-active');
+  let selection = (direction == 'down') ? active.nextElementSibling : active.previousElementSibling;
+
+  if (selection && selection.classList.contains('read-item')) {
+    active.classList.remove('is-active');
+    selection.classList.add('is-active');
+  }
+};
 
 const constructReadItem = (screenshot, title) => {
   let readList = document.querySelector('#read-list');
@@ -45,7 +55,7 @@ const constructReadItem = (screenshot, title) => {
   readList.appendChild(anchor);
   
   let readItems = document.querySelectorAll('.read-item');
-  
+
   for (item of readItems) {
     console.log(item);
     item.addEventListener('click', selectItem);
@@ -56,5 +66,6 @@ const constructReadItem = (screenshot, title) => {
 module.exports = {
   addItemToList,
   pushItem,
-  getItems
+  getItems,
+  changeItem
 };

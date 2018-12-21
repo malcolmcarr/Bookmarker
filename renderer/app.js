@@ -3,7 +3,6 @@ const validator = require('validator');
 
 const items = require('./items');
 
-
 let addModalOpenButton = document.querySelector('.open-add-modal');
 let addModalCloseButton = document.querySelector('.close-add-modal');
 let addModal = document.querySelector('#add-modal');
@@ -11,6 +10,19 @@ let addButton = document.querySelector('#add-button');
 let itemInput = document.querySelector('#item-input');
 let message = document.querySelector('#message');
 let searchBar = document.querySelector('#search');
+
+document.addEventListener('keydown', (e) => {
+  switch (e.code) {
+    case 'ArrowUp':
+      items.changeItem('up');
+      break;
+    case 'ArrowDown':
+      items.changeItem('down');
+      break;
+    default:
+      break;
+  }
+});
 
 addModalOpenButton.addEventListener('click', (e) => {
   e.preventDefault();
@@ -50,6 +62,10 @@ ipcRenderer.on('newItemSuccess', (e, item) => {
   
   items.pushItem(item);
   items.addItemToList(item);
+
+  if (items.getItems().length === 1) {
+    document.querySelector('.read-item').classList.add('is-active');
+  }
 });
 
 if (items.getItems()) {
