@@ -1,4 +1,4 @@
-const toReadItems = JSON.parse(localStorage.getItem('items')) || [];
+let toReadItems = JSON.parse(localStorage.getItem('items')) || [];
 
 const saveItems = () => {
   localStorage.setItem('items', JSON.stringify(toReadItems));
@@ -48,10 +48,28 @@ const _remove = (element) => {
 
 const deleteItem = (item) => {
   // Use parent to delete entire item, not the button
-  let index =_getIndex(item.parentNode);
+  const index =_getIndex(item.parentNode);
+  const delNode = document.querySelectorAll('.read-item')[index];
+  const wasActive = delNode.classList.contains('is-active');
 
   // Removes the node from view
-  _remove(document.querySelectorAll('.read-item')[index]);
+  _remove(delNode);
+
+  // Update array to remove item and then save the new array
+  toReadItems = toReadItems.filter((_, i) => {
+    return i !== index;
+  });
+  saveItems();
+
+  // Make a new active item if necessary or display no items message
+  if (toReadItems.length && wasActive) {
+    console.log('ran if')
+    let newActiveIndex = (index === 0) ? 0 : index - 1;
+    let activeNode = document.querySelectorAll('.read-item')[newActiveIndex];
+    activeNode.classList.add('is-active');
+  } else if (!toReadItems.length) {
+    document.querySelector('#no-items').style.display = '';
+  }
 }
 
 const openItem = () => {
@@ -75,6 +93,7 @@ const constructReadItem = (screenshot, title, url) => {
   let deleteButton = document.createElement('a');
   deleteButton.addEventListener('click', e => {
     e.preventDefault();
+    e.stopPropagation();
     deleteItem(e.currentTarget);
   })
   deleteButton.id = 'delete';

@@ -42,7 +42,6 @@ searchBar.addEventListener('keyup', () => {
   let titles = document.querySelectorAll('.read-item > h2');
 
   for (let title of titles) {
-    console.log(title.innerText.toLowerCase());
     title.innerText.toLowerCase().includes(query) ? title.parentElement.style.display = '' : 
     title.parentElement.style.display = 'none';
   }
@@ -51,7 +50,8 @@ searchBar.addEventListener('keyup', () => {
 document.addEventListener('keypress', (e) => {
   if (e.code === 'Enter' && addModal.classList.contains('is-active')) {
     submitItem();
-  } else {
+  } else if (e.code === 'Enter') {
+    console.log('ran keypress event');
     items.openItem();
   }
 });
