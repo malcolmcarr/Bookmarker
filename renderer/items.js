@@ -34,9 +34,25 @@ const changeItem = (direction) => {
   if (selection && selection.classList.contains('read-item')) {
     active.classList.remove('is-active');
     selection.classList.add('is-active');
-    openItem();
   }
 };
+
+// Returns the index of a node in the children list
+const _getIndex = (node) => {
+  return [...node.parentNode.children].indexOf(node) - 1;
+}
+
+const _remove = (element) => {
+  element.parentNode.removeChild(element);
+}
+
+const deleteItem = (item) => {
+  // Use parent to delete entire item, not the button
+  let index =_getIndex(item.parentNode);
+
+  // Removes the node from view
+  _remove(document.querySelectorAll('.read-item')[index]);
+}
 
 const openItem = () => {
   if (!getItems().length) return;
@@ -53,9 +69,18 @@ const openItem = () => {
 const constructReadItem = (screenshot, title, url) => {
   let readList = document.querySelector('#read-list');
   let anchor = document.createElement('a');
-  anchor.classList.add('panel-block', 'read-item');
+  anchor.classList.add('panel-block', 'read-item', 'has-icon-right');
   anchor.setAttribute('data-url', url);
   anchor.setAttribute('data-title', title);
+  let deleteButton = document.createElement('a');
+  deleteButton.addEventListener('click', e => {
+    e.preventDefault();
+    deleteItem(e.currentTarget);
+  })
+  deleteButton.id = 'delete';
+  deleteButton.title = 'Remove bookmark';
+  let icon = document.createElement('i');
+  icon.classList.add('fa','fa-trash', 'fa-2x');
   let figure = document.createElement('figure');
   figure.classList.add('image', 'has-shadow', 'is-64x64', 'thumb');
   let image = document.createElement('img');
@@ -64,8 +89,10 @@ const constructReadItem = (screenshot, title, url) => {
   h2.classList.add('title', 'is-4', 'column');
   h2.innerText = title;
   
+  deleteButton.appendChild(icon);
   anchor.appendChild(figure);
   anchor.appendChild(h2);
+  anchor.appendChild(deleteButton);
   figure.appendChild(image);
   readList.appendChild(anchor);
   
@@ -80,6 +107,8 @@ const constructReadItem = (screenshot, title, url) => {
 
 module.exports = {
   addItemToList,
+  deleteItem,
+  openItem,
   pushItem,
   getItems,
   changeItem

@@ -42,3 +42,11 @@
 #loader .fa {
   color: #00D1B2;
 }
+
+.fa-trash {
+  color: crimson;
+}
+
+.fa-trash:hover {
+  color: maroon;
+}

@@ -41,6 +41,7 @@
     const queryString = require('query-string');
     const queryParams = queryString.parse(location.search);
 
+    // Get the URL to load from the query string passed to the window
     let url = decodeURIComponent(queryParams.url);
 
     document.querySelector('webview').addEventListener('dom-ready', (e) => {
@@ -49,12 +50,14 @@
       e.currentTarget.loadURL(url);
     });
 
+    // Make sure event listener only runs once
     document.querySelector('webview').addEventListener('did-finish-load', (e) => {
       if (e.currentTarget.getAttribute('data-load-triggered')) return;
       e.currentTarget.setAttribute('data-load-triggered', true);
       document.querySelector('#loader').classList.add('is-hidden');
     });
 
+    // Make sure event listener only runs once
     document.querySelector('webview').addEventListener('did-fail-load', (e) => {
       document.querySelector('#loader .busy').classList.add('is-hidden');
       document.querySelector('#loader .failed').classList.remove('is-hidden');

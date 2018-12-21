@@ -10,6 +10,7 @@ let addButton = document.querySelector('#add-button');
 let itemInput = document.querySelector('#item-input');
 let message = document.querySelector('#message');
 let searchBar = document.querySelector('#search');
+let deleteButton = document.querySelector('#delete');
 
 document.addEventListener('keydown', (e) => {
   switch (e.code) {
@@ -50,6 +51,8 @@ searchBar.addEventListener('keyup', () => {
 document.addEventListener('keypress', (e) => {
   if (e.code === 'Enter' && addModal.classList.contains('is-active')) {
     submitItem();
+  } else {
+    items.openItem();
   }
 });
 
