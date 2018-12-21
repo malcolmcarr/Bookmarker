@@ -13,6 +13,8 @@ const createWindow = () => {
   
   window.loadFile('./renderer/main.html');
 
+  window.webContents.openDevTools();
+
   window.on('closed', () => {
     window = null;
   });

@@ -63,26 +63,33 @@ const deleteItem = (item) => {
 
   // Make a new active item if necessary or display no items message
   if (toReadItems.length && wasActive) {
-    console.log('ran if')
     let newActiveIndex = (index === 0) ? 0 : index - 1;
     let activeNode = document.querySelectorAll('.read-item')[newActiveIndex];
     activeNode.classList.add('is-active');
   } else if (!toReadItems.length) {
     document.querySelector('#no-items').style.display = '';
   }
-}
+};
 
-const openItem = () => {
+window.openItem = () => {
   if (!getItems().length) return;
 
   let target = document.querySelector('.read-item.is-active');
-  let itemURL = encodeURIComponent(target.getAttribute('data-url'));
+  let encodedURL = encodeURIComponent(target.getAttribute('data-url'));
   let itemTitle = target.getAttribute('data-title');
 
-  let readerWindowURL = `file://${__dirname}/reader.html?url=${itemURL}`;
+  let readerWindowURL = `file://${__dirname}/reader.html?url=${encodedURL}`;
 
   let readerWindow = window.open(readerWindowURL, itemTitle);
-}
+};
+
+window.openItemInBrowser = () => {
+  if (!getItems()) return;
+
+  let target = document.querySelector('.read-item.is-active');
+  let itemURL = target.getAttribute('data-url');
+  require('electron').shell.openExternal(itemURL);
+};
 
 const constructReadItem = (screenshot, title, url) => {
   let readList = document.querySelector('#read-list');

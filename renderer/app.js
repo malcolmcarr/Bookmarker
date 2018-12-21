@@ -2,6 +2,7 @@ const { ipcRenderer } = require('electron');
 const validator = require('validator');
 
 const items = require('./items');
+const menu = require('./menu');
 
 let addModalOpenButton = document.querySelector('.open-add-modal');
 let addModalCloseButton = document.querySelector('.close-add-modal');
@@ -10,7 +11,6 @@ let addButton = document.querySelector('#add-button');
 let itemInput = document.querySelector('#item-input');
 let message = document.querySelector('#message');
 let searchBar = document.querySelector('#search');
-let deleteButton = document.querySelector('#delete');
 
 document.addEventListener('keydown', (e) => {
   switch (e.code) {
@@ -52,7 +52,7 @@ document.addEventListener('keypress', (e) => {
     submitItem();
   } else if (e.code === 'Enter') {
     console.log('ran keypress event');
-    items.openItem();
+    window.openItem();
   }
 });
 
